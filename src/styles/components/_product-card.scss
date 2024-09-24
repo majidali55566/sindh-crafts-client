@@ -1,0 +1,22 @@
+.product-card {
+  border-radius: 2rem;
+  max-width: 14rem;
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  .name {
+    font-weight: 600;
+  }
+  .details {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.747);
+  }
+  .price {
+    font-weight: 600;
+  }
+  .heartw {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}

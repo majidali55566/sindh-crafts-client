@@ -1,0 +1,78 @@
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.clr-primary-400 {
+  color: $clr-primary-400;
+}
+.text-center {
+  text-align: center;
+}
+.gap-400 {
+  gap: 1rem;
+}
+.gap-500 {
+  gap: 2rem;
+}
+
+// typography
+
+.fs-300 {
+  font-size: $fs-300;
+}
+.fs-400 {
+  font-size: $fs-400;
+}
+.fs-500 {
+  font-size: $fs-500;
+}
+.fs-600 {
+  font-size: $fs-600;
+}
+.fs-700 {
+  font-size: $fs-700;
+}
+.fs-800 {
+  font-size: $fs-800;
+}
+
+.fw-regular {
+  font-weight: $fw-regular;
+}
+.fw-md {
+  font-weight: $fw-medium;
+}
+.fw-bold {
+  font-weight: $fw-bold;
+}

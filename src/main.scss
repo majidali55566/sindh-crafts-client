@@ -1,0 +1,16 @@
+@import "./styles/abstracts/variables";
+@import "./styles/abstracts/mediaQueries";
+@import "./styles/abstracts/utilities";
+@import "./styles/base/reset";
+@import "./styles/base/typography";
+@import "./styles/abstracts/app-padding-mixin";
+
+//components
+@import "./styles/components/header";
+@import "./styles/components/product-card";
+
+//Layouts
+@import "./styles/layout/mainLayout";
+
+// pages
+@import "./styles/pages/home";

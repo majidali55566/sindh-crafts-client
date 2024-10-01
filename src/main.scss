@@ -8,9 +8,12 @@
 //components
 @import "./styles/components/header";
 @import "./styles/components/product-card";
-
+@import "./styles/components/create-poduct-modal";
 //Layouts
 @import "./styles/layout/mainLayout";
 
 // pages
 @import "./styles/pages/home";
+@import "./styles/pages/productPage";
+@import "./styles/pages/addToCart";
+@import "./styles/pages/seller-product-page";

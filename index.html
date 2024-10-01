@@ -2,12 +2,24 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!-- Add the Facebook SDK script tag to the public/index.html -->
     <script
       async
       defer
       crossorigin="anonymous"
       src="https://connect.facebook.net/en_US/sdk.js"
     ></script>
+
+    <script>
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId: "3812581522393988", // Replace with your actual Facebook App ID
+          cookie: true,
+          xfbml: true,
+          version: "v10.0", // Adjust the version based on what you are using
+        });
+      };
+    </script>
 
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

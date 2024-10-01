@@ -7,11 +7,28 @@
   .name {
     font-weight: 600;
   }
+  .image-chip-container {
+    position: relative;
+    .product-image {
+      width: 300px;
+      max-height: 200px;
+    }
+    .sell-chip {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+  }
+
   .details {
     font-size: 0.8rem;
     color: rgba(0, 0, 0, 0.747);
   }
   .price {
+    font-weight: 600;
+  }
+  .discounted-price {
+    font-size: 1.2rem;
     font-weight: 600;
   }
   .heartw {

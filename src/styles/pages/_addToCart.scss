@@ -1,0 +1,41 @@
+.add-to-cart-page {
+  @include section-padding;
+  background-color: $clr-neutral-400;
+  padding-top: 6rem;
+  .price-label {
+    display: none;
+    @include md {
+      display: block;
+    }
+  }
+  .price-label-2 {
+    display: block;
+    @include md {
+      display: none;
+    }
+  }
+  .cart-product {
+    display: grid;
+    gap: 1rem;
+    @include md {
+      display: flex;
+      justify-content: space-between;
+    }
+    .product-details {
+      display: grid;
+      gap: 1rem;
+
+      @include md {
+        display: flex;
+        img {
+          max-width: 300px;
+          max-height: 250px;
+        }
+      }
+    }
+  }
+  .sub-total-price {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

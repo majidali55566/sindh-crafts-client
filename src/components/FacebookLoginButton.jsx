@@ -14,7 +14,7 @@ const LoginWithFaceBook = () => {
       onReject={(error) => console.log(error)}
     >
       <FacebookLoginButton
-        style={{ fontSize: ".9rem" }}
+        style={{ fontSize: ".8rem" }}
         text="Continue with facebook"
       />
     </LoginSocialFacebook>

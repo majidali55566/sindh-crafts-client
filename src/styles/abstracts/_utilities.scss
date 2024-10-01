@@ -39,11 +39,19 @@
 .text-center {
   text-align: center;
 }
+.gap-200 {
+  gap: 0.5rem;
+}
 .gap-400 {
   gap: 1rem;
 }
 .gap-500 {
   gap: 2rem;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
 }
 
 // typography

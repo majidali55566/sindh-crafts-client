@@ -1,0 +1,16 @@
+.seller-creation-product-modal {
+  .modal-container {
+    @include section-padding;
+
+    .colors-sizes {
+      display: flex;
+      justify-content: space-between;
+      .color-attributes {
+        padding: 1rem;
+      }
+      .size-attributes {
+        padding: 1rem;
+      }
+    }
+  }
+}

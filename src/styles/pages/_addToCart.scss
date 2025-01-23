@@ -35,7 +35,7 @@
     }
   }
   .sub-total-price {
-    display: flex;
-    justify-content: flex-end;
+    display: grid;
+    place-content: end;
   }
 }

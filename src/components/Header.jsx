@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingCart, Menu, Dashboard } from "@mui/icons-material";
 import { Badge, Box, Button, Divider, IconButton } from "@mui/material";
@@ -7,7 +7,7 @@ import SearchBar from "./SearchBar";
 import JoinUsModal from "./JoinUs";
 import useAuth from "../hooks/useAuth";
 import BecomeASellerModal from "./Forms/BecomeASeller";
-import useAxiosPrivate from "../api/axiosPrivate";
+import { CartContext } from "../context/CartContext";
 const Header = () => {
   const [IsNavOpen, setIsNavOpen] = useState(false);
   const windowWidth = useWindowWidth();
@@ -15,29 +15,10 @@ const Header = () => {
   const [IsBecomeSellerModalOpen, setIsBecomeSellerModalOpen] = useState(false);
 
   const [IsModalOpen, setIsModalOpen] = useState(false);
-  const [noOfItemsInCart, setnoOfItemsInCart] = useState(0);
   const [formType, setFormType] = useState("signup"); // Form type state
   const toggleFormType = () => {
     setFormType(formType === "signup" ? "signin" : "signup");
   };
-  const axiosPrivate = useAxiosPrivate();
-  useEffect(() => {
-    const getNumberOfCartItems = async () => {
-      try {
-        if (auth?.accessToken && auth?.user.role === "buyer") {
-          const response = await axiosPrivate.get("/api/cart");
-          console.log(response);
-          if (response.status === 200) {
-            setnoOfItemsInCart(response.data.items.length);
-          }
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getNumberOfCartItems();
-  }, []);
-  console.log(noOfItemsInCart);
 
   const openSignInModal = () => {
     setFormType("signin"); // Set to "signin" when Sign In is clicked
@@ -52,6 +33,7 @@ const Header = () => {
   const handleCloseJoinUsModal = () => {
     setIsModalOpen(false);
   };
+  const { cartItems } = useContext(CartContext);
 
   useEffect(() => {
     if (windowWidth > 768) setIsNavOpen(true);
@@ -70,13 +52,9 @@ const Header = () => {
             />
           </Link>
 
-          <div className="search">
+          <div className="pos-relative d-flex justify-center items-center">
             <SearchBar />
-          </div>
-          <div className="d-flex justify-center align-center">
-            {auth?.accessToken ? (
-              <Box></Box>
-            ) : (
+            {!auth?.accessToken && (
               <>
                 <Button color="white" onClick={openSignInModal}>
                   Sign In
@@ -95,7 +73,7 @@ const Header = () => {
               <div>
                 <Link to="/add-to-cart">
                   <IconButton>
-                    <Badge badgeContent={noOfItemsInCart} color="secondary">
+                    <Badge badgeContent={cartItems?.length} color="secondary">
                       <ShoppingCart sx={{ color: "white" }} />
                     </Badge>
                   </IconButton>
@@ -131,26 +109,16 @@ const Header = () => {
                 <Link to="/">HOME</Link>
               </li>
               <li>
-                <Link href="/">BAGS</Link>
+                <Link to="/add-to-cart">Add to cart</Link>
               </li>
               <li>
-                <Link href="/">BASKETS</Link>
+                <Link to="/seller-dashboard">Seller Dashboard</Link>
               </li>
               <li>
-                <Link href="/">HOME DECOR</Link>
+                <Link to="/checkout">Checkout</Link>
               </li>
               <li>
-                <Link href="/">KITCHEN AND DINING</Link>
-              </li>
-              <li>
-                <Link href="/">BEST SELLER</Link>
-              </li>
-              <li>
-                <Link href="/">ACCESSORIES</Link>
-              </li>
-
-              <li>
-                <Link href="/">ABOUT US</Link>
+                <Link to="/orders">orders</Link>
               </li>
             </ul>
           )}

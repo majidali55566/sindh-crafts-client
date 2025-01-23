@@ -23,13 +23,12 @@
         display: flex;
       }
     }
-    .search {
-      display: none;
-
-      @include md {
-        display: flex;
-      }
-    }
+    // .search input {
+    //   @media (max-width: 640px) {
+    //     position: absolute;
+    //     left: 0;
+    //   }
+    // }
     .menu-icon {
       display: flex;
       @include md {
@@ -41,7 +40,7 @@
   nav {
     display: flex;
     position: relative;
-    z-index: 9999999;
+    z-index: 998;
     @include md {
       display: grid;
       flex-wrap: wrap;

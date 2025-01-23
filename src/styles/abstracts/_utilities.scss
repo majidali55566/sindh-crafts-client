@@ -48,14 +48,14 @@
 .gap-500 {
   gap: 2rem;
 }
-
+.gap-600 {
+  gap: 3rem;
+}
 .error {
   color: red;
   font-size: 0.8rem;
 }
-
 // typography
-
 .fs-300 {
   font-size: $fs-300;
 }
@@ -83,4 +83,8 @@
 }
 .fw-bold {
   font-weight: $fw-bold;
+}
+
+.pos-relative {
+  position: relative;
 }

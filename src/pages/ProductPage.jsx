@@ -45,7 +45,7 @@ const ProductPage = () => {
       }
     };
     getProductById();
-  }, []);
+  }, [id]);
 
   const handleCloseSignUpModel = () => {
     setIsSignUpModelOpen(false);
@@ -77,7 +77,7 @@ const ProductPage = () => {
       return;
     }
 
-    if (!selectedSize) {
+    if (product?.sizes?.lengh === 0) {
       setSnackbarMessage({
         message: "Please select a size before adding to cart!",
         severity: "error",
@@ -205,7 +205,7 @@ const ProductPage = () => {
                     fontSize: ".8rem",
                     border:
                       selectedColor === color
-                        ? "2px solid #ac7420"
+                        ? "2px solid trasnparent"
                         : "1px solid gray",
                     borderRadius: "5px",
                     transition: "border 0.2s",
@@ -238,7 +238,7 @@ const ProductPage = () => {
                     fontSize: ".8rem",
                     border:
                       selectedSize === size
-                        ? "2px solid #ac7420"
+                        ? "2px solid trasparent"
                         : "1px solid gray",
                     borderRadius: "5px",
                     transition: "border 0.2s",

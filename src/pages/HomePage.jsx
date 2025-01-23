@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Button, Chip, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import BecomeASellerModal from "../components/Forms/BecomeASeller";
@@ -6,7 +7,6 @@ import useAuth from "../hooks/useAuth";
 import JoinUsModal from "../components/JoinUs";
 import axios from "../api/axios";
 
-/* eslint-disable react/no-unescaped-entities */
 const HomePage = () => {
   const categories = [
     { imgPath: "/images/categories/image19.jpg", name: "Dholak" },
@@ -16,23 +16,42 @@ const HomePage = () => {
     { imgPath: "/images/categories/image23.jpg", name: "Bedsheets" },
     { imgPath: "/images/categories/image24.png", name: "Cultural suits" },
   ];
+
   const navigate = useNavigate();
   const { auth } = useAuth();
-  const [products, setproducts] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1); // Track current page
+  const [hasMore, setHasMore] = useState(true); // Check if more products exist
+  const limit = 5; // Products per page
+
   useEffect(() => {
-    const getAllProduct = async () => {
-      try {
-        const response = await axios.get("/api/products");
-        console.log(response.data);
-        const allProducts = response.data.products;
-        const shuffledProducts = allProducts.sort(() => Math.random() - 0.5);
-        setproducts(shuffledProducts.slice(0, 10));
-      } catch (error) {
-        console.log(error);
+    fetchProducts();
+  }, [currentPage]);
+
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get(
+        `/api/products?page=${currentPage}&limit=${limit}`
+      );
+      const newProducts = response.data.products;
+
+      // Append new products to the existing list
+      setProducts((prevProducts) => [...prevProducts, ...newProducts]);
+
+      // Check if there are more products
+      if (newProducts.length < limit) {
+        setHasMore(false); // Stop further requests if fewer products are returned
       }
-    };
-    getAllProduct();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  const loadMoreProducts = () => {
+    if (hasMore) {
+      setCurrentPage((prevPage) => prevPage + 1); // Fetch next page
+    }
+  };
 
   const [IsBecomeSellerModalOpen, setIsBecomeSellerModalOpen] = useState(false);
   const [IsJoinUsModalOpen, setIsJoinUsModalOpen] = useState(false);
@@ -41,13 +60,13 @@ const HomePage = () => {
     setIsBecomeSellerModalOpen(false);
   };
 
-  const hanldeStartSellingClick = () => {
+  const handleStartSellingClick = () => {
     if (auth.accessToken) {
       if (auth.user.role === "buyer") setIsBecomeSellerModalOpen(true);
       else navigate("/seller-dashboard");
+    } else {
+      setIsJoinUsModalOpen(true);
     }
-
-    if (!auth.accessToken) setIsJoinUsModalOpen(true);
   };
 
   return (
@@ -55,12 +74,12 @@ const HomePage = () => {
       <div className="hero-section">
         <img src="/images/cap-banner.jpg" />
         <div className="intro">
-          <h1>Sindh's Finest Crafts </h1>
+          <h1>Sindh's Finest Crafts</h1>
           <p>
             Sindh's Rich Heritage, Crafted into Every Handmade Masterpiece,
             Where Artisans Blend Tradition
           </p>
-          <Button onClick={hanldeStartSellingClick} variant="contained">
+          <Button onClick={handleStartSellingClick} variant="contained">
             Start selling
           </Button>
         </div>
@@ -83,12 +102,6 @@ const HomePage = () => {
             <h3>Browse</h3>
             <h3>Our Products</h3>
           </div>
-          <Button
-            sx={{ display: { xs: "none", sm: "none", md: "block" } }}
-            variant="contained"
-          >
-            See All
-          </Button>
         </div>
 
         <div className="products">
@@ -101,15 +114,15 @@ const HomePage = () => {
               <div className="image-chip-container">
                 <img
                   className="product-image"
-                  src={product.images[0].url}
+                  src={product.images[0]?.url}
                   alt={product.name}
                 />
                 {product.discountedPrice !== product.price && (
                   <Chip
                     className="sell-chip"
                     label="Sell"
+                    color="primary"
                     sx={{
-                      background: "black",
                       color: "white",
                       fontSize: ".9rem",
                     }}
@@ -148,7 +161,16 @@ const HomePage = () => {
             </div>
           ))}
         </div>
+
+        {hasMore && (
+          <div className="d-flex justify-center items-center">
+            <Button onClick={loadMoreProducts} variant="contained">
+              Load More
+            </Button>
+          </div>
+        )}
       </div>
+
       <BecomeASellerModal
         open={IsBecomeSellerModalOpen}
         onClose={handleBecomeMemberCloseModal}

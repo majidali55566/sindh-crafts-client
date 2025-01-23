@@ -1,8 +1,9 @@
-import { Divider, Paper, Typography, Chip } from "@mui/material";
+import { Divider, Paper, Typography, Chip, Button } from "@mui/material";
 import QuantitySelector from "../components/QuantitySelector"; // Import the QuantitySelector component
 import { useState, useEffect, useContext } from "react";
 import useAxiosPrivate from "../api/axiosPrivate";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const AddToCartPage = () => {
   const { cartItems, setcartItems } = useContext(CartContext);
@@ -10,7 +11,6 @@ const AddToCartPage = () => {
   const [subtotal, setSubtotal] = useState(0); // State to store the subtotal
   const [updatedItems, setUpdatedItems] = useState({}); // State to track if individual quantities have changed
   const axiosPrivate = useAxiosPrivate();
-  console.log(cartItems);
 
   useEffect(() => {
     const getUserCart = async () => {
@@ -18,12 +18,20 @@ const AddToCartPage = () => {
         const response = await axiosPrivate.get("/api/cart");
         if (response.status === 200) {
           setcartItems(response.data.items);
+
+          // Ensure all items are reflected in initialQuantities
           const quantities = response.data.items.reduce((acc, item) => {
             acc[item._id] = item.quantity;
             return acc;
           }, {});
-          console.log(response.data);
-          setInitialQuantities(quantities); // Save initial quantities as an object with item._id as key
+          setInitialQuantities(quantities); // Save initial quantities
+
+          // Initialize updatedItems: none of the items should be marked as updated initially
+          const updatedState = response.data.items.reduce((acc, item) => {
+            acc[item._id] = false; // Mark all items as not updated initially
+            return acc;
+          }, {});
+          setUpdatedItems(updatedState);
         }
       } catch (error) {
         console.log(error);
@@ -32,9 +40,27 @@ const AddToCartPage = () => {
     getUserCart();
   }, []);
 
+  console.log("Cart container rendered");
+
+  // Ensure initialQuantities are updated when cartItems change (including new items)
+  useEffect(() => {
+    const newQuantities = cartItems.reduce((acc, item) => {
+      if (!(item._id in initialQuantities)) {
+        acc[item._id] = item.quantity;
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(newQuantities).length > 0) {
+      setInitialQuantities((prevQuantities) => ({
+        ...prevQuantities,
+        ...newQuantities,
+      }));
+    }
+  }, [cartItems]);
+
   // Handle quantity change for a specific product
   const handleQuantityChange = (id, newQuantity) => {
-    console.log(id);
     setcartItems((prevItems) =>
       prevItems.map((item) =>
         item._id === id ? { ...item, quantity: newQuantity } : item
@@ -86,15 +112,25 @@ const AddToCartPage = () => {
       console.error("Failed to update item", error);
     }
   };
+
   const handleDeleteItemFromCart = async (item) => {
-    console.log(item.product._id);
     try {
       const response = await axiosPrivate.post("/api/cart/products/delete", {
         productId: item.product._id,
+        selectedColor: item.selectedColor,
+        selectedSize: item.selectedSize,
       });
       if (response.status === 200) {
         setcartItems((prev) =>
-          prev.filter((item) => item.product._id !== response.data.id)
+          prev.filter(
+            (cartItem) =>
+              // Check all three properties: product ID, selectedColor, and selectedSize
+              !(
+                cartItem.product._id === response.data.productId &&
+                cartItem.selectedColor === response.data.selectedColor &&
+                cartItem.selectedSize === response.data.selectedSize
+              )
+          )
         );
       }
       console.log(response);
@@ -118,7 +154,7 @@ const AddToCartPage = () => {
             style={{ marginBottom: "1rem" }}
           >
             <div className="product-details">
-              <img src={item.product.images[0].url} alt={item.product.name} />
+              <img src={item?.product?.images[0].url} alt={item.product.name} />
               <div className="d-flex flex-column gap-200">
                 <h4>{item.product.name}</h4>
                 <Typography color="green" fontSize=".8rem">
@@ -140,13 +176,12 @@ const AddToCartPage = () => {
                     handleQuantityChange(item._id, newQuantity)
                   }
                 />
-                {/* Display Update Button for each item */}
                 <Divider orientation="horizontal" />
                 <div className="d-flex">
                   {updatedItems[item._id] && (
                     <Chip
                       color="success"
-                      label="update"
+                      label="Update"
                       clickable
                       sx={{ fontSize: ".6rem" }}
                       onClick={() => handleUpdateItem(item)}
@@ -176,6 +211,11 @@ const AddToCartPage = () => {
           <Typography fontWeight="bold">
             Subtotal ({cartItems?.length} product(s)): Rs. {subtotal}
           </Typography>
+          <Link to="/checkout">
+            <Button variant="contained" disabled={cartItems.length === 0}>
+              Proceed to checkout
+            </Button>
+          </Link>
         </div>
       </Paper>
     </div>

@@ -11,6 +11,7 @@ import SellerProductPage from "../pages/sellerDashboard/SellerProductPage";
 import { Inventory, AccountCircle } from "@mui/icons-material";
 import useAxiosPrivate from "../api/axiosPrivate";
 import SellerProfilePage from "../pages/sellerDashboard/SellerProfilePage";
+import OrdersPage from "../pages/sellerDashboard/OrdersPage";
 
 // Define the navigation for the dashboard
 const NAVIGATION = [
@@ -40,7 +41,7 @@ const NAVIGATION = [
 const demoTheme = createTheme({
   palette: {
     primary: {
-      main: "#ac7420",
+      main: "#1b4f72",
     },
     secondary: {
       main: "#933c10",
@@ -78,20 +79,6 @@ function DashboardPage() {
 }
 
 // Page content for Orders
-function OrdersPage() {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        textAlign: "center",
-      }}
-    >
-      <Typography>Orders content</Typography>
-    </Box>
-  );
-}
 
 // Update the routing logic based on the pathname
 function DemoPageContent({ pathname }) {

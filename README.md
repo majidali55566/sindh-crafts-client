@@ -1,8 +1,21 @@
-# React + Vite
+Frontend - Sindh crafts🌐
+The frontend of the Handmade Sindh project delivers a seamless and intuitive user experience, tailored for promoting and selling artisan products. Built with React.js and styled using MUI, the frontend provides responsive and engaging interfaces for both buyers and sellers.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Key Features 🚀
+User Authentication: Supports login via Google, Facebook, and Gmail for secure and convenient access.
+Buyer Experience: Features a comprehensive product catalog with search functionality, add-to-cart, checkout, and an order history view for buyers.
+Seller Dashboard: Provides a dedicated dashboard for sellers to manage their products (add, update, delete) and track orders.
+Responsive Design: Built with MUI to ensure the application is visually appealing and accessible across all devices.
+Tech Stack ⚙️
+Frameworks & Libraries: React.js, MUI
+State Management: Context API
+Routing: React Router
+APIs: Integration with a Node.js backend for seamless communication
+Tools: Git, Postman
 
-Currently, two official plugins are available:
+### Deployed Links 🌐  
+- **Frontend:**https://sindh-crafts.netlify.app/
+- **Backend:**https://hand-made-sindh-backend.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+

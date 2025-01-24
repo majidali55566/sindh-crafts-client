@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const useAxiosPrivate = () => {
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-  const depBackendUrl = "https://hand-made-sindh-backend.vercel.app/";
+  const depBackendUrl = "https://hand-made-sindh-backend.vercel.app";
   // const devBackendUrl = "http://localhost:1337";
 
   const axiosPrivate = axios.create({

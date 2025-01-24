@@ -1,4 +1,4 @@
-Frontend - Handmade Sindh 🌐
+Frontend - Sindh crafts🌐
 The frontend of the Handmade Sindh project delivers a seamless and intuitive user experience, tailored for promoting and selling artisan products. Built with React.js and styled using MUI, the frontend provides responsive and engaging interfaces for both buyers and sellers.
 
 Key Features 🚀

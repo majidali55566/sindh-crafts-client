@@ -177,6 +177,7 @@ const JoinUsModal = ({ open, onClose, formType, toggleFormType }) => {
                     }
                     onSuccess={handleGoogleLoginSuccess}
                     onError={() => console.log("Login Failed")}
+                    redirect_uri="https://sindh-crafts.netlify.app"
                   />
                   <LoginWithFaceBook
                     setAlert={setAlert}
